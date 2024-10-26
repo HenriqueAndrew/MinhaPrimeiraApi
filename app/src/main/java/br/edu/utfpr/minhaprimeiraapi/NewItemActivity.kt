@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat.checkSelfPermission
 import br.edu.utfpr.minhaprimeiraapi.databinding.ActivityNewItemBinding
+import br.edu.utfpr.minhaprimeiraapi.model.ItemLocation
 import br.edu.utfpr.minhaprimeiraapi.model.ItemValue
 import br.edu.utfpr.minhaprimeiraapi.service.Result
 import br.edu.utfpr.minhaprimeiraapi.service.RetrofitClient
@@ -126,16 +127,24 @@ class NewItemActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun save() {
         if (!validateForm()) return
+        val name = binding.name.text.toString()
+        val itemPosition = selectedMarker?.position?.let {
+            ItemLocation(
+                name = name,
+                it.latitude,
+                it.longitude
+            )
+        }
         CoroutineScope(Dispatchers.IO).launch {
             val id = SecureRandom().nextInt().toString()
             val itemValue = ItemValue(
                 id,
-                binding.name.text.toString(),
+                name,
                 binding.surname.text.toString(),
                 binding.profession.text.toString(),
                 binding.imageUrl.text.toString(),
                 binding.age.text.toString().toInt(),
-                location = null,
+                location = itemPosition,
                 Date()
             )
             val result = safeApiCall { RetrofitClient.apiService.addItem(itemValue) }
