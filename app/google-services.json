@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "135644417650",
+    "project_id": "minhaprimeiraapi-855a2",
+    "storage_bucket": "minhaprimeiraapi-855a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135644417650:android:1775e432a5db75e289bceb",
+        "android_client_info": {
+          "package_name": "br.edu.utfpr.minhaprimeiraapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135644417650-8kastnilsnhol0dkv1mlgbuehd5q8b95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.edu.utfpr.minhaprimeiraapi",
+            "certificate_hash": "5aaf1c2649578693b41484d7222eeddde79de742"
+          }
+        },
+        {
+          "client_id": "135644417650-56435ceclicnqrfksv5ha326opfn5mr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_TDMB2LYnMng2Nc5ijjMPLHe46haCHjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135644417650-56435ceclicnqrfksv5ha326opfn5mr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

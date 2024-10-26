@@ -2,10 +2,14 @@ package br.edu.utfpr.minhaprimeiraapi
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,15 +19,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.utfpr.minhaprimeiraapi.adapter.ItemAdapter
 import br.edu.utfpr.minhaprimeiraapi.database.DatabaseBuilder
-import br.edu.utfpr.minhaprimeiraapi.model.Item
 import br.edu.utfpr.minhaprimeiraapi.database.model.UserLocation
 import br.edu.utfpr.minhaprimeiraapi.databinding.ActivityMainBinding
+import br.edu.utfpr.minhaprimeiraapi.model.Item
 import br.edu.utfpr.minhaprimeiraapi.service.Result
 import br.edu.utfpr.minhaprimeiraapi.service.RetrofitClient
 import br.edu.utfpr.minhaprimeiraapi.service.safeApiCall
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,6 +51,20 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         fetchItems()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_logout -> {
+                onLogout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun requestLocationPermission() {
@@ -141,6 +160,18 @@ class MainActivity : AppCompatActivity() {
         binding.addCta.setOnClickListener {
             startActivity(NewItemActivity.newIntent(this))
         }
+    }
+
+    private fun onLogout() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = LoginActivity.newIntent(this)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
 }
